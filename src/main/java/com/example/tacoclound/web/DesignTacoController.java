@@ -44,6 +44,15 @@ public class DesignTacoController {
         model.addAttribute("design", new Taco());
         return "design";
     }
+
+    @PostMapping
+    public String processDesign(Taco design){
+        // save the taco design
+        // we'll do this in chap 3
+        log.info("Processing desing: " + design );
+        return "redirect:/orders/current";
+    }
+
     private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
         return ingredients.stream()
                 .filter(x -> x.getType().equals(type))

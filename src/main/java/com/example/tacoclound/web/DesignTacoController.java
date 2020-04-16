@@ -49,12 +49,25 @@ public class DesignTacoController {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientReposioty.findAll().forEach(i -> ingredients.add(i));
 
-        Type[] types = Type.values();
+        Type[] types = Ingredient.Type.values();
 
         for (Type type : types){
             model.addAttribute(type.toString().toLowerCase(),
                     filterByType(ingredients, type));
         }
+        // dong 59 add model taco vao , de html parse field trong view design.html , phan dien name cua taco,
+        // nhung van chua hieu tai sao, phan duoi ko chi dinh la model nao, nhung no van hieu can lay name
+        // cua taco
+        // chuong 3
+        /*        <div>
+        <h3>Name your taco creation:</h3>
+        <input type="text" th:field="*{name}"/>
+        <span class="validationError"
+        th:if="${#fields.hasErrors('name')}"
+        th:errors="*{name}">Name Error</span>
+        <br/>
+        <button>Submit your taco</button>
+        </div>*/
         model.addAttribute("design", new Taco());
         return "design";
     }

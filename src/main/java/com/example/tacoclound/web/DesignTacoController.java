@@ -48,10 +48,10 @@ public class DesignTacoController {
     public String showDesignForm(Model model){
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientReposioty.findAll().forEach(i -> ingredients.add(i));
-
         Type[] types = Ingredient.Type.values();
 
         for (Type type : types){
+            log.info(filterByType(ingredients, type).toString());
             model.addAttribute(type.toString().toLowerCase(),
                     filterByType(ingredients, type));
         }

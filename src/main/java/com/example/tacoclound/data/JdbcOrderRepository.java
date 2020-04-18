@@ -45,6 +45,7 @@ public class JdbcOrderRepository implements OrderRepository {
     }
 
     private Long saveOrderDetails(Order order) {
+        @SuppressWarnings("uncecked")
         Map<String, Object> values =
                 objectMapper.convertValue(order, Map.class);
         values.put("placedAt", order.getPlacedAt());

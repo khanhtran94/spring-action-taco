@@ -25,7 +25,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/design")
 @SessionAttributes("order")
 public class DesignTacoController {
+
     private final IngredientReposioty ingredientReposioty;
+
     private TacoRepository designRepo;
 
     @ModelAttribute(name="order")

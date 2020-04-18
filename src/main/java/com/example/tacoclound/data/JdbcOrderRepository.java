@@ -44,8 +44,9 @@ public class JdbcOrderRepository implements OrderRepository {
         return null;
     }
 
+    // ham nay la ham save order, map giua cac name cua field voi name cua database
     private Long saveOrderDetails(Order order) {
-        @SuppressWarnings("uncecked")
+        @SuppressWarnings("unchecked")
         Map<String, Object> values =
                 objectMapper.convertValue(order, Map.class);
         values.put("placedAt", order.getPlacedAt());

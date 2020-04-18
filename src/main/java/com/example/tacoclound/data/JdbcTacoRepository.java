@@ -40,15 +40,26 @@ public class JdbcTacoRepository implements TacoRepository {
 
     private Long saveTacoInfo(Taco taco) {
         taco.setCreateAt(new Date());
-        PreparedStatementCreator psc = new PreparedStatementCreatorFactory(
-                "insert into Taco (name, CREATEAT) values (?, ?)",
-                Types.VARCHAR, Types.TIMESTAMP
-        ).newPreparedStatementCreator(
-                Arrays.asList(
-                        taco.getName(),
-                        new Timestamp(taco.getCreateAt().getTime())
-                )
-        );
+//        PreparedStatementCreator psc = new PreparedStatementCreatorFactory(
+//                "insert into Taco (name, CREATEAT) values (?, ?)",
+//                Types.VARCHAR, Types.TIMESTAMP
+//        ).newPreparedStatementCreator(
+//                Arrays.asList(
+//                        taco.getName(),
+//                        new Timestamp(taco.getCreateAt().getTime())
+//                )
+//        );
+        // cai phia tren la cua sach, run khi submit se bi loi nullpointer, con cai phia duoi la cach fix
+        // chua hieu van de o dau
+        //https://github.com/habuma/spring-in-action-5-samples/issues/40
+        // https://github.com/habuma/spring-in-action-5-samples/issues/25
+        PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory("insert into Taco (name, CREATEAT) values (?, ?)", Types.VARCHAR, Types.TIMESTAMP);
+        pscf.setReturnGeneratedKeys(Boolean.TRUE);
+        PreparedStatementCreator psc = pscf.newPreparedStatementCreator(Arrays.asList(
+                taco.getName(),
+                new Timestamp(taco.getCreateAt().getTime())
+        ));
+
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(psc, keyHolder);
         return keyHolder.getKey().longValue();

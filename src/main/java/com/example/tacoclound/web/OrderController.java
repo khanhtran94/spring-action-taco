@@ -32,6 +32,7 @@ public class OrderController {
         return "orderForm";
     }
 
+    // chua hieu sessionStatus trong nay dung lam ji
     @PostMapping
     public String processOrder(@Valid Order order, Errors errors, SessionStatus sessionStatus){
         if (errors.hasErrors()){

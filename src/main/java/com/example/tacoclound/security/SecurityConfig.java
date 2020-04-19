@@ -5,21 +5,25 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    //https://github.com/habuma/spring-in-action-5-samples/issues/41
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         auth
                 .inMemoryAuthentication()
                 .withUser("buzz")
-                .password("infinity")
+                .password(encoder.encode("infinity"))
                 .authorities("ROLE_USER")
                 .and()
                 .withUser("woody")
-                .password("infinity")
-                .authorities(("ROLE_USER"));
+                .password(encoder.encode("infinity"))
+                .authorities("ROLE_USER");
     }
 }

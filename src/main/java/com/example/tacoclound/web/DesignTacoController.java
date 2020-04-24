@@ -4,7 +4,7 @@ import com.example.tacoclound.Ingredient;
 import com.example.tacoclound.Ingredient.Type;
 import com.example.tacoclound.Order;
 import com.example.tacoclound.Taco;
-import com.example.tacoclound.data.IngredientReposioty;
+import com.example.tacoclound.data.IngredientRepository;
 import com.example.tacoclound.data.TacoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import org.springframework.validation.Errors;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,7 @@ import java.util.stream.Collectors;
 @SessionAttributes("order")
 public class DesignTacoController {
 
-    private final IngredientReposioty ingredientReposioty;
+    private final IngredientRepository ingredientRepository;
 
     private TacoRepository designRepo;
 
@@ -41,15 +40,15 @@ public class DesignTacoController {
     }
 
     @Autowired
-    public DesignTacoController(IngredientReposioty ingredientReposioty, TacoRepository designRepo){
-        this.ingredientReposioty = ingredientReposioty;
+    public DesignTacoController(IngredientRepository ingredientRepository, TacoRepository designRepo){
+        this.ingredientRepository = ingredientRepository;
         this.designRepo = designRepo;
     }
 
     @GetMapping
     public String showDesignForm(Model model){
         List<Ingredient> ingredients = new ArrayList<>();
-        ingredientReposioty.findAll().forEach(i -> ingredients.add(i));
+        ingredientRepository.findAll().forEach(i -> ingredients.add(i));
         Type[] types = Ingredient.Type.values();
 
         for (Type type : types){

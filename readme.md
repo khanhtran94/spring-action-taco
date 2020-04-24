@@ -4,3 +4,8 @@
 ```javascript
 java -cp h2-1.4.190.jar org.h2.tools.Server
 ```
+
+```text
+sudo lsof -i :8080
+
+```
